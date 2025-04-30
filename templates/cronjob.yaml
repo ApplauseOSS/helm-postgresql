@@ -1,11 +1,11 @@
 ---
 {{- if and .Values.ldap.enabled .Values.ldap.pgldapconfig }}
-apiVersion: batch/v1beta1
+apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: pg-ldap-sync
 spec:
-  schedule: {{ .Values.ldap.cron.schedule | quote}} 
+  schedule: {{ .Values.ldap.cron.schedule | quote}}
   jobTemplate:
     metadata:
       labels:
