@@ -1,11 +1,7 @@
 # Helm Chart for PostgreSQL
-[![CircleCI](https://circleci.com/gh/cetic/helm-postgresql.svg?style=svg)](https://circleci.com/gh/cetic/helm-postgresql/tree/master) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) ![version](https://img.shields.io/github/tag/cetic/helm-postgresql.svg?label=release)
-![test](https://github.com/cetic/helm-postgresql/actions/workflows/basic_test.yml/badge.svg)
 
-## $${\color{red}This \space project \space is \space not \space maintained \space anymore.}$$
-
-If you are interested in maintaining a fork of this project, you can advertise it in the [dedicated issue](https://github.com/cetic/helm-postgresql/issues/21).
-
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) ![version](https://img.shields.io/github/tag/ApplauseOSS/helm-postgresql.svg?label=release)
+![test](https://github.com/ApplauseOSS/helm-postgresql/actions/workflows/basic_test.yml/badge.svg)
 
 ## Introduction
 
@@ -19,29 +15,23 @@ This [Helm](https://github.com/kubernetes/helm) chart installs [postgreSQL](http
 
 ## Installation
 
-### Add Helm repository
-
-```bash
-helm repo add cetic https://cetic.github.io/helm-charts
-helm repo update
-```
-
 ### Configure the chart
 
 The following items can be set via `--set` flag during installation or configured by editing the `values.yaml` directly (need to download the chart first).
 
-#### Configure the way how to expose postgreSQL service:
+#### Configure the way how to expose postgreSQL service
 
 - **ClusterIP**: Exposes the service on a cluster-internal IP. Choosing this value makes the service only reachable from within the cluster.
 - **NodePort**: Exposes the service on each Node’s IP at a static port (the NodePort). You’ll be able to contact the NodePort service, from outside the cluster, by requesting `NodeIP:NodePort`.
 - **LoadBalancer**: Exposes the service externally using a cloud provider’s load balancer.
 
-#### Configure the way how to persistent data:
+#### Configure the way how to persistent data
 
 - **Disable**: The data does not survive the termination of a pod.
 - **Persistent Volume Claim(default)**: A default `StorageClass` is needed in the Kubernetes cluster to dynamic provision the volumes. Specify another StorageClass in the `storageClass` or set `existingClaim` if you have already existing persistent volumes to use.
 
-#### How to use LDAP:
+#### How to use LDAP
+
 LDAP is used only to validate the user name/password pairs. Therefore the user must already exist in the database before LDAP can be used for authentication. If you **enable ldap** a **CronJob** will be activated, it will run the tool [pg-ldap-sync](https://github.com/cetic/pg-ldap-sync-docker) that will copy users from your ldap server to your database.
 
 ### Install the chart
@@ -49,7 +39,7 @@ LDAP is used only to validate the user name/password pairs. Therefore the user m
 Install the postgresql helm chart with a release name `my-release`:
 
 ```bash
-helm install my-release cetic/postgresql
+helm install my-release oci://ghcr.io/ApplauseOSS/helm-charts/charts/postgresql
 ```
 
 ## Uninstallation
@@ -126,16 +116,17 @@ The following table lists the configurable parameters of the postgresql chart an
 | `tolerations`                                                               | Tolerations for pod assignment                                                                                     | `[]`                            |
 | **priorityClass**                                                             |
 | `priorityClassName`                                                         | PriorityClassName for pod assignment                                                                               | `nil`                           |
+
 ## Why this PostgreSQL Helm Chart?
 
-* use postgres official Docker Image.
-* needed LDAP support for the [FADI](https://github.com/cetic/fadi) project.
-* use this Chart for other architecture (ARM, ...).
-* ...
+- use postgres official Docker Image.
+- needed LDAP support for the [FADI](https://github.com/cetic/fadi) project.
+- use this Chart for other architecture (ARM, ...).
+- ...
 
 ## Contributing
 
-Feel free to contribute by making a [pull request](https://github.com/cetic/helm-postgresql/pull/new/master).
+Feel free to contribute by making a [pull request](https://github.com/ApplauseOSS/helm-postgresql/pull/new/master).
 
 Please read the official [Contribution Guide](https://github.com/helm/charts/blob/master/CONTRIBUTING.md) from Helm for more information on how you can contribute to this Chart.
 
