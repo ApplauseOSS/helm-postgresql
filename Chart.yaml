@@ -1,6 +1,6 @@
 apiVersion: v2
 name: postgresql
-version: 0.2.6
+version: 0.2.7
 appVersion: 11.5.0
 description: PostgreSQL is an open-source object-relational database management system (ORDBMS) emphasizing extensibility and technical standards compliance.
 keywords:
@@ -9,7 +9,7 @@ keywords:
   - database
 home: https://www.postgresql.org/
 icon: https://en.wikipedia.org/wiki/PostgreSQL#/media/File:Postgresql_elephant.svg
-source:
+sources:
   - https://github.com/ApplauseOSS/helm-postgresql
 maintainers:
   - name: ApplauseOSS
