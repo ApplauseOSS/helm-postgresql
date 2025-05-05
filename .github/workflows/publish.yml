@@ -1,0 +1,60 @@
+name: publish-postgresql-helm-chart
+
+on:
+  push:
+    branches: ['master']
+    paths:
+      - 'templates/**'
+      - 'Chart.yaml'
+
+jobs:
+  build-and-push-postgresql-helm-chart-to-ghcr:
+    name: Build and push PostgreSQL Helm chart to GHCR
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Helm
+        uses: azure/setup-helm@v4
+      - name: Package and upload chart
+        shell: bash
+        env:
+          REGISTRY: "ghcr.io"
+          REPOSITORY: "${{ github.repository }}"
+          TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          USER: "${{ github.repository_owner }}"
+        run: |
+          rm -rf dist
+          mkdir dist
+          helm package . -d dist/
+          echo "${TOKEN}" | helm registry login "${REGISTRY}/${REPOSITORY,,}" -u "${USER}" --password-stdin
+          helm push dist/*.tgz "oci://${REGISTRY}/${REPOSITORY,,}/charts"
+
+  build-and-push-postgresql-helm-chart-to-dockerhub:
+    name: Build and push PostgreSQL Helm chart to Docker Hub
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Helm
+        uses: azure/setup-helm@v4
+      - name: Package chart
+        shell: bash
+        run: |
+          rm -rf dist
+          mkdir dist
+          helm package . -d dist/
+      - name: Login and push to Docker Hub
+        shell: bash
+        env:
+          REGISTRY: "docker.io"
+          USERNAME: "${{ secrets.DOCKER_HUB_USERNAME }}"
+          PASSWORD: "${{ secrets.DOCKER_HUB_TOKEN }}"
+          REPOSITORY: "applause/postgresql"
+        run: |
+          echo "${PASSWORD}" | helm registry login "${REGISTRY}" -u "${USERNAME}" --password-stdin
+          helm push dist/*.tgz "oci://${REGISTRY}/${REPOSITORY}"
