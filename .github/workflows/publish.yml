@@ -53,7 +53,7 @@ jobs:
         env:
           REGISTRY: "docker.io"
           USERNAME: "${{ secrets.DOCKER_HUB_USERNAME }}"
-          PASSWORD: "${{ secrets.DOCKER_HUB_TOKEN }}"
+          PASSWORD: "${{ secrets.DOCKER_HUB_PASSWORD }}"
           REPOSITORY: "applause/postgresql"
         run: |
           echo "${PASSWORD}" | helm registry login "${REGISTRY}" -u "${USERNAME}" --password-stdin
