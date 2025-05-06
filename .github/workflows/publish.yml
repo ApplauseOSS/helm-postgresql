@@ -54,7 +54,7 @@ jobs:
           REGISTRY: "docker.io"
           USERNAME: "${{ secrets.DOCKER_HUB_USERNAME }}"
           PASSWORD: "${{ secrets.DOCKER_HUB_PASSWORD }}"
-          REPOSITORY: "applause/postgresql"
+          NAMESPACE: "applause"
         run: |
           echo "${PASSWORD}" | helm registry login "${REGISTRY}" -u "${USERNAME}" --password-stdin
-          helm push dist/*.tgz "oci://${REGISTRY}/${REPOSITORY}"
+          helm push dist/*.tgz "oci://${REGISTRY}/${NAMESPACE}"
