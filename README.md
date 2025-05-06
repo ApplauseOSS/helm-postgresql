@@ -1,11 +1,15 @@
 # Helm Chart for PostgreSQL
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) ![version](https://img.shields.io/github/tag/ApplauseOSS/helm-postgresql.svg?label=release)
-![test](https://github.com/ApplauseOSS/helm-postgresql/actions/workflows/basic_test.yml/badge.svg)
+![test](https://github.com/ApplauseOSS/helm-postgresql/actions/workflows/pr.yml/badge.svg)
 
 ## Introduction
 
 This [Helm](https://github.com/kubernetes/helm) chart installs [postgreSQL](https://www.postgresql.org/) in a Kubernetes cluster.
+
+This Helm chart installs PostgreSQL in a Kubernetes cluster. It is best suited for simpler, non-critical installations or development environments.
+
+For **high availability (HA)**, production-grade, or more complex PostgreSQL use cases, we recommend exploring a purpose-built Postgres operator instead of this chart. See [this comparison of Kubernetes Postgres operators](https://portworx.com/blog/choosing-a-kubernetes-operator-for-postgresql/) for guidance on selecting one that fits your requirements.
 
 ## Prerequisites
 
